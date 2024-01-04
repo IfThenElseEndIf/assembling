@@ -42,7 +42,7 @@ class AssemblerError(SyntaxError):
 class Assembler:
     "Represents an assembler capable of translating code based on two strings, which define what to write on the start of the result, as well as the provided instruction set."
     def __init__(self, start_formatter: str, end_formatter: str, instruction_set: InstructionSet) -> None:
-        "Represents an assembler capable of translating code based on two strings, which define what to write on the start of the result, as well as the provided instruction set."
+        "Represents an assembler capable of translating code based on two strings, which define what to write on the start and ending (respectively) of the result, as well as the provided instruction set."
         self.instruction_set = instruction_set
         self.start_formatter = start_formatter
         self.end_formatter = end_formatter
