@@ -56,9 +56,9 @@ class Assembler:
         to_jump = []
 
         for line_number, line in enumerate((re.sub(r";.*", "", text)).splitlines()):
-            if (_s := re.fullmatch(r"\s*((?:_|\w)(?:_|\w|\d)*)\s*:(.*)", line)):
+            if (_s := re.fullmatch(r"\s*((?:_|[a-zA-Z])(?:_|[a-zA-Z]|\d)*)\s*:(.*)", line)):
                 statement = _s.groups()[1]
-                if re.fullmatch(r"\s*((?:_|\w)(?:_|\w|\d)*)\s*:(.*)", statement): raise AssemblerError("can't have a more than one label in one line; separate labels with newlines")
+                if re.fullmatch(r"\s*((?:_|[a-zA-Z])(?:_|[a-zA-Z]|\d)*)\s*:(.*)", statement): raise AssemblerError("can't have a more than one label in one line; separate labels with newlines")
                 new_text.append(line[:len(line) - len(statement)]); to_jump.append(line_number)
                 new_text.append(statement); to_jump.append(line_number)
             else:
@@ -69,7 +69,7 @@ class Assembler:
 
         for line_number, line in enumerate((re.sub(r";.*", "", new_text)).splitlines()):
             no_instruction_can_please_me = True
-            if (s := re.fullmatch(r"\s*((?:_|\w)(?:_|\w|\d)*)\s*:\s*", line)):
+            if (s := re.fullmatch(r"\s*((?:_|[a-zA-Z])(?:_|[a-zA-Z]|\d)*)\s*:\s*", line)):
                 if sections_started != 0:
                     result.append(self.instruction_set.section_end_formatter(s.groups()[0]))
                 sections_started += 1
